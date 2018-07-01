@@ -1,9 +1,10 @@
+import "isomorphic-fetch";
+
 import React from "react";
 import { hydrate } from "react-dom";
 import { connectRoutes } from "redux-first-router";
 import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
-import createHistory from "history/createBrowserHistory";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { AppContainer } from "react-hot-loader";
 
@@ -11,9 +12,7 @@ import { App } from "./views/App";
 import { routesMap } from "./routesMap";
 import { createReducer } from "../src/reducers";
 
-const history = createHistory();
-
-const { reducer, middleware, enhancer } = connectRoutes(history, routesMap);
+const { reducer, middleware, enhancer } = connectRoutes(routesMap);
 
 const rootReducer = createReducer({ location: reducer });
 const middlewares = applyMiddleware(middleware);

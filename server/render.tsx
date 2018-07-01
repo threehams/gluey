@@ -1,3 +1,5 @@
+import "isomorphic-fetch";
+
 import React from "react";
 import ReactDOM from "react-dom/server";
 import { clearChunks, flushChunkNames } from "react-universal-component/server";
@@ -11,7 +13,7 @@ const render = ({ clientStats }: any) => async (
   request: any,
   response: any,
 ) => {
-  const store = await configureStore(request);
+  const store = await configureStore({ initialEntries: [request.path] });
 
   clearChunks();
   const app = ReactDOM.renderToString(

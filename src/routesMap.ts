@@ -1,15 +1,22 @@
+const API_URL = "http://localhost:3000/";
+
 export const routesMap = {
   HOME: "/",
-  ABOUT: "/about",
+  ABOUT: "/about/",
   ENTITY: {
-    path: "/entities/:slug",
+    path: "/entities/:slug/",
     thunk: async (dispatch, getState) => {
-      const { slug } = getState().location.payload;
-      const data = await fetch(`/api/entity/${slug}`);
-      const entity = await data.json();
-      const action = { type: "ENTITY_FOUND", payload: { entity } }; // you handle this action type
+      try {
+        const { slug } = getState().location.payload;
+        const data = await fetch(`${API_URL}/api/entity/${slug}/`);
+        const entity = await data.json();
+        const action = { type: "ENTITY_FOUND", payload: { entity } }; // you handle this action type
 
-      dispatch(action);
+        dispatch(action);
+      } catch (err) {
+        console.log(err);
+        dispatch({ type: "NOT_FOUND" });
+      }
     },
   },
 };

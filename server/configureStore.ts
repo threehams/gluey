@@ -1,18 +1,13 @@
 import { createStore, applyMiddleware, compose } from "redux";
-import createHistory from "history/createMemoryHistory";
 import { connectRoutes } from "redux-first-router";
-import { Request } from "express";
 
 import { routesMap } from "../src/routesMap";
 import { createReducer } from "../src/reducers";
 
-export const configureStore = async (request: Request) => {
-  const history = createHistory({ initialEntries: [request.path] });
-
-  const { reducer, middleware, enhancer, thunk } = connectRoutes(
-    history,
-    routesMap,
-  ); // notice `thunk`
+export const configureStore = async ({ initialEntries }) => {
+  const { reducer, middleware, enhancer, thunk } = connectRoutes(routesMap, {
+    initialEntries,
+  }); // notice `thunk`
   const rootReducer = createReducer({ location: reducer });
   // note the order that the enhancer and middleware are composed in: enhancer first, then middleware
   const store = createStore(

@@ -6,7 +6,8 @@ import "./About.css";
 const About: React.SFC<{}> = () => {
   return (
     <p className="about">
-      We are a calm blue. <Link to="/">Would you like to go home?</Link>
+      We are a calm blue.{" "}
+      <Link to={{ type: "HOME" }}>Would you like to go home?</Link>
     </p>
   );
 };
